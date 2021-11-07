@@ -1,10 +1,9 @@
-package requests;
+package com.practice.api.requests;
 
 import org.springframework.http.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import javax.print.attribute.standard.Media;
 import java.util.Collections;
 
 public class Booking {
