@@ -54,6 +54,10 @@ public class bookingChecks {
                     .setAdditionalneeds("None")
                     .build();
 
+            ResponseEntity<String> response =  Booking.postBooking(payload);
+
+            assertThat(response.getStatusCode(), is(HttpStatus.OK));
+
         }
     }
 
