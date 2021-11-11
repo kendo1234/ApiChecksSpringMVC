@@ -1,20 +1,16 @@
-package com.practice.api.payloads;
+package com.practice.api.payloads.responses;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
 
-public class BookingDatesPayload {
+public class BookingDetailsDates {
 
     @JsonProperty
     private Date checkin;
+
     @JsonProperty
     private Date checkout;
-
-    public BookingDatesPayload(Date checkin, Date checkout) {
-        this.checkin = checkin;
-        this.checkout = checkout;
-    }
 
     public Date getCheckin() {
         return checkin;

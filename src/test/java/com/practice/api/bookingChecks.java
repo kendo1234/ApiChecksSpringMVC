@@ -1,6 +1,10 @@
 package com.practice.api;
 
-import com.practice.api.payloads.BookingPayload;
+import com.practice.api.payloads.requests.AuthPayload;
+import com.practice.api.payloads.requests.BookingPayload;
+import com.practice.api.payloads.responses.AuthResponse;
+import com.practice.api.payloads.responses.BookingResponse;
+import com.practice.api.requests.Auth;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -8,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import com.practice.api.requests.Booking;
 
+import java.sql.SQLOutput;
 import java.util.Date;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -54,9 +59,41 @@ public class bookingChecks {
                     .setAdditionalneeds("None")
                     .build();
 
-            ResponseEntity<String> response =  Booking.postBooking(payload);
+            ResponseEntity<BookingResponse> response =  Booking.postBooking(payload);
 
             assertThat(response.getStatusCode(), is(HttpStatus.OK));
+
+        }
+
+        @Test
+        public void deleteBookingReturns200() {
+
+            BookingPayload payload = new BookingPayload.BookingPayloadBuilder()
+                    .setFirstname("Tony")
+                    .setLastname("Stark")
+                    .setTotalprice(500)
+                    .setDepositpaid(true)
+                    .setCheckin(new Date())
+                    .setCheckout(new Date())
+                    .setAdditionalneeds("None")
+                    .build();
+
+            ResponseEntity<BookingResponse> createdBookingResponse =  Booking.postBooking(payload);
+
+            AuthPayload authPayload = new AuthPayload.AuthPayloadBuilder()
+                .setUsername("admin")
+                .setPassword("password123")
+                .build();
+
+            ResponseEntity<AuthResponse> authResponse = Auth.postAuth(authPayload);
+
+            int id = createdBookingResponse.getBody().getBookingid();
+            String token = authResponse.getBody().getToken();
+
+            ResponseEntity<String> deleteResponse = Booking.deleteBooking(id, token);
+
+            assertThat(deleteResponse.getStatusCode(), is(HttpStatus.CREATED));
+
 
         }
     }

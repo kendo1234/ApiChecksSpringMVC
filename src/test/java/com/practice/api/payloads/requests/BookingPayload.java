@@ -1,4 +1,4 @@
-package com.practice.api.payloads;
+package com.practice.api.payloads.requests;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
